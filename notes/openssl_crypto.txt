@@ -1,0 +1,73 @@
+Help:
+openssl help
+man openssl
+
+W przykładach hasło to: Adam
+
+Generowanie pary kluczy priv/pub
+--------------------------------
+1. Generowanie klucza prywatnego:
+openssl genrsa -out private.key 8192
+
+2. Generowanie klucza publicznego:
+openssl rsa -in private.key -pubout -out public.key
+
+Szyfrowanie asymetryczne:
+------------------------
+1. Tworzenie wiadomości
+echo "wiadomość" > msg.txt
+
+2. Szyfrowanie kluczem publicznym
+openssl rsautl -encrypt -in msg.txt -out enc.txt -inkey public.key -pubin
+
+3. Odszyfrowanie prywatnym
+openssl rsautl -decrypt -in enc.txt -out msg1.txt -inkey private.key
+
+Podpisanie wiadomości
+---------------------
+1. Generowanie podpisu
+openssl dgst -sign private.key msg.txt > sign.msg
+
+2. Weryfikacja podpisu
+openssl dgst -verify public.key -signature sign.msg msg.txt
+
+Szyfrowanie/Deszyfrowanie symetryczne
+-----------------------
+1. Szyfrowanie symetryczne
+openssl enc -des3 -e -salt -a -in msg.txt -out msgsym.base64
+2. Deszyfrowanie symetryczne
+openssl enc -des3 -d -salt -a -out msg1.txt -in msgsym.base64
+
+
+X.509
+-----
+1. Generowanie klucza CA
+openssl genrsa -des3 -out CA.key 4096
+
+2. Generowanie certyfikatu CA
+openssl req -new -key CA.key -x509 -days 365 -out CA.crt -config config.txt
+
+3. Odcisk palca CA
+openssl x509 -fingerprint -noout -in CA.crt
+
+4. Żądanie wydania certyfikatu
+openssl genrsa -out req_key.key
+openssl req -new -key req_key.key -out new.csr -config config.txt
+
+5. Podpisanie na podstawie żądania
+openssl x509 -req -days 365 -in new.csr -CA CA.crt -CAkey CA.key -CAcreateserial -out new.crt
+
+Kontrola połączenia https
+-------------------------
+openssl s_client -connect onet.pl:443
+
+
+
+
+
+
+
+
+
+
+
