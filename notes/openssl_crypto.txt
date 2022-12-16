@@ -61,13 +61,3 @@ Kontrola połączenia https
 -------------------------
 openssl s_client -connect onet.pl:443
 
-
-
-
-
-
-
-
-
-
-
