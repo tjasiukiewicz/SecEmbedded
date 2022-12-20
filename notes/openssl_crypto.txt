@@ -36,7 +36,7 @@ Szyfrowanie/Deszyfrowanie symetryczne
 1. Szyfrowanie symetryczne
 openssl enc -des3 -e -salt -a -in msg.txt -out msgsym.base64
 2. Deszyfrowanie symetryczne
-openssl enc -des3 -d -salt -a -out msg1.txt -in msgsym.base64
+openssl enc -des3 -a -out msg1.txt -in msgsym.base64
 
 
 X.509
